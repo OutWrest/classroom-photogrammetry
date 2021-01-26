@@ -127,3 +127,7 @@ dmypy.json
 # Test script
 temp
 temp/*
+
+# VSC
+
+.vscode

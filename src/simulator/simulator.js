@@ -1,14 +1,19 @@
 let x;
 let y;
 let z;
+let m; 
+let cam;
+let zcam;
 
 function setup() {
     canvas = createCanvas(windowWidth, windowHeight, WEBGL);
     noStroke();
     x = random(-100, 100);
     y = windowHeight/5;
-    z = random(-400, 400);
-    
+    z = random(-400, 600);
+    m = true;
+    cam = createCamera()
+    zcam = cam.eyeZ;
 }
 
 function draw() {
@@ -34,12 +39,15 @@ function draw() {
     plane(windowHeight, windowWidth);
     pop();
 
-    push();
-    translate(0, -windowHeight/2, 0);
-    fill(255, 200, 255);
-    rotateX((90 * PI) / 180);
-    plane(windowHeight, windowWidth);
-    pop();
+    
+    if (m) {
+        push();
+        translate(0, -windowHeight/2, 0);
+        fill(255, 200, 255);
+        rotateX((90 * PI) / 180);
+        plane(windowHeight, windowWidth);
+        pop();
+    }
 
     push();
     translate(0, 0, -windowHeight);
@@ -48,6 +56,13 @@ function draw() {
     pop();
     
     drawBox(x, y, z, 100, 100);
+
+    // behind camera wall
+    push();
+    translate(0, 0, zcam+1);
+    fill(255, 200, 200);
+    plane(max(windowHeight, windowWidth), max(windowHeight, windowWidth));
+    pop();
 
     orbitControl(5);
 }
@@ -62,8 +77,16 @@ function drawBox(x, y, z, d, gcolor) {
 
 function windowResized() {
     resizeCanvas(windowWidth, windowHeight);
+    zcam = cam.eyeZ;
 }
 
 function mousePressed() {
-    saveCanvas(canvas,"room","png");
+    if (m) {
+        saveCanvas(canvas,"room","png");
+        camera(0, -windowWidth/1.2, 0, 0, 0, 0, 0, 1, 0);
+        m = false;
+    }
+    else {
+        saveCanvas(canvas,"roomtop","png");
+    }
 }
