@@ -1,14 +1,19 @@
 import cv2
 import numpy as np
 
-img = cv2.imread("simulator_imgs/room_1.png")
+img = cv2.imread("simulator_imgs/room_2.png")
 h, w, *_ = img.shape
 
-top_img = cv2.imread("simulator_imgs/roomtop_1.png")
+top_img = cv2.imread("simulator_imgs/roomtop_2.png")
 th, tw, *_ = img.shape
 
 def showImg(img):
     cv2.imshow("img", img)
+    cv2.waitKey(0)
+
+def showImgs(img1, img2):
+    cv2.imshow("img1", img1)
+    cv2.imshow("img2", img2)
     cv2.waitKey(0)
  
 pts1 = np.float32([
@@ -20,6 +25,8 @@ pts2 = np.float32([
 ]) 
 
 M = cv2.getPerspectiveTransform(pts1, pts2)
+
+print(M)
 
 dst = cv2.warpPerspective(img, M, (w, h))
 
@@ -52,5 +59,7 @@ for pt in pts1:
 new_truth = cv2.resize(dst2, (tw // (261 // 56), th), interpolation = cv2.INTER_AREA)
 new_perpe = cv2.resize(dst,  (w  // (261 // 56),  h), interpolation = cv2.INTER_AREA)
 
-showImg(new_truth)
-showImg(new_perpe)
+showImgs(new_truth, new_perpe)
+
+# Grab bottom of boxes?
+# Transform base on y axis (another perspective warp)

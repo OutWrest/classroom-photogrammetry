@@ -1,6 +1,5 @@
-let x;
-let y;
-let z;
+let boxes = [];
+let AMOUNT_OF_BOXES = 5;
 let m; 
 let cam;
 let zcam;
@@ -8,12 +7,15 @@ let zcam;
 function setup() {
     canvas = createCanvas(windowWidth, windowHeight, WEBGL);
     noStroke();
-    x = random(-100, 100);
-    y = windowHeight/5;
-    z = random(-400, 600);
     m = true;
     cam = createCamera()
     zcam = cam.eyeZ;
+    
+    for (var i=0; i < AMOUNT_OF_BOXES; i++) {
+        boxes.push(
+            [ random(-300, 300), windowHeight/5, random(-700, 500) ]
+        );
+    }
 }
 
 function draw() {
@@ -55,7 +57,10 @@ function draw() {
     plane(max(windowHeight, windowWidth), max(windowHeight, windowWidth));
     pop();
     
-    drawBox(x, y, z, 100, 100);
+    boxes.forEach(pos => {
+        var [x, y, z] = pos;
+        drawBox(x, y, z, 100, 100);
+    });
 
     // behind camera wall
     push();
