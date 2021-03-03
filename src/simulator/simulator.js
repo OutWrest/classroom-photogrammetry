@@ -59,7 +59,7 @@ function draw() {
     
     boxes.forEach(pos => {
         var [x, y, z] = pos;
-        drawBox(x, y, z, 100, 100);
+        drawBox(x, y+48, z, 100, 100);
     });
 
     // behind camera wall
