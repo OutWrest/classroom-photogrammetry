@@ -1,6 +1,5 @@
 import cv2
 import numpy as np
-from sympy import Point, Line, Segment
 
 img = cv2.imread("simulator_imgs/room_2.png")
 h, w, *_ = img.shape
@@ -19,17 +18,8 @@ def showImgs(img1, img2, img3):
     cv2.waitKey(0)
  
 pts1 = np.float32([
-    [782, 522-29], [1138, 522-29], [0, h-89], [w, h-89]
+    [782, 522-25], [1138, 522-25], [0, h-119], [w, h-119]
 ])
-
-pt1= Point(782, 522)
-pt2= Point(0, h)
-
-pt3= Point(1138, 522)
-pt4= Point(w, h)
-
-l1 = Line(pt1, pt2)
-l2 = Line(pt3, pt4)
 
 pts2 = np.float32([
     [0, 0], [w, 0], [0, h], [w, h]
